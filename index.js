@@ -479,6 +479,9 @@ app.post('/updateScore', async (req, res) => {
     res.sendStatus(200);
   })
   
+  app.get('/explore', (req, res) => {
+    res.render('explore');
+  })
 
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
