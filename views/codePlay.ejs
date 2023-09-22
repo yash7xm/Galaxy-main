@@ -13,15 +13,28 @@
         <div class="nav-content">
             <div class="logo">Galaxy</div>
             <div class="features">
-                <a href="/">Explore</a>
-                <a href="/">Create</a>
-                <a href="/">Dashboard</a>
+                <div class="logo">Galaxy</div>
+                <div class="features">
+                    <a href="/explore">Explore</a>
+                    <a href="/projects">Projects</a>
+                    <a href="/create">Code Play</a>
+                    <a href="/typing">Typing Test</a>
+                    <a href="/upload">Upload</a>
+                    <% if (typeof sessionId !=='undefined' ) { %>
+                        <% if (!sessionId) { %>
+                            <a href="/signIn">Register</a>
+                            <% } else { %>
+                                <a href="/">Profile</a>
+                                <% } %>
+                                    <% } else { %>
+                                        <a href="/signIn">Register</a>
+                                        <% } %>  
             </div>
         </div>
     </nav>
 
     <header>
-        <p>Play area. </p>
+        <p class="title"><%= title %></p>
     </header>
 
     <main>
@@ -31,8 +44,8 @@
                 <div class="large">
                     <span class="editor-tabs">
                         <span class="html tab-selected">HTML</span>
-                        <span class="css ">CSS</span>
-                        <span class="javascript ">JAVASCRIPT</span>
+                        <span class="css">CSS</span>
+                        <span class="javascript">JAVASCRIPT</span>
                     </span>
                     <span class="editor-icons">
                         <span class="copy"><i class="fa-regular fa-copy" style="color: #ffffff;"></i></span>

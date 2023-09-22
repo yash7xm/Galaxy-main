@@ -16,7 +16,15 @@
                 <a href="/projects" class="underline-hover-effect">Projects</a>
                 <a href="/create"class="underline-hover-effect">Code Play</a>
                 <a href="/upload"class="underline-hover-effect">Upload</a>
-                <a href="/"class="underline-hover-effect">Profile</a>     
+                <% if (typeof sessionId !=='undefined' ) { %>
+                    <% if (!sessionId) { %>
+                        <a href="/signIn" class="underline-hover-effect">Register</a>
+                        <% } else { %>
+                            <a href="/" class="underline-hover-effect">Profile</a>
+                            <% } %>
+                                <% } else { %>
+                                    <a href="/signIn" class="underline-hover-effect">Register</a>
+                                    <% } %>  
             </div>
         </div>
     </nav>

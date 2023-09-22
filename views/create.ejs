@@ -15,7 +15,7 @@
             <div class="exit"><i class="fa-solid fa-xmark"></i></div>
             <div class="greeting">Hello!</div>
             <div class="msg"><p>Please fill in a unique title for your project.</p></div>
-            <div class="input"><input type="text" placeholder="Fill in your title"></div>
+            <div class="input title-name"><input type="text" placeholder="Fill in your title"></div>
             <div class="continue"><p>Continue</p></div>
         </div>
     </div>
@@ -24,9 +24,20 @@
         <div class="nav-content">
             <div class="logo">Galaxy</div>
             <div class="features">
-                <a href="/">Explore</a>
-                <a href="/">Create</a>
-                <a href="/">Dashboard</a>
+                <a href="/explore">Explore</a>
+                <a href="/projects">Projects</a>
+                <a href="/create">Code Play</a>
+                <a href="/typing">Typing Test</a>
+                <a href="/upload">Upload</a>
+                <% if (typeof sessionId !=='undefined' ) { %>
+                    <% if (!sessionId) { %>
+                        <a href="/signIn">Register</a>
+                        <% } else { %>
+                            <a href="/">Profile</a>
+                            <% } %>
+                                <% } else { %>
+                                    <a href="/signIn">Register</a>
+                                    <% } %>  
             </div>
         </div>
     </nav>
@@ -35,7 +46,17 @@
         <div class="header-content">
             <div class="greet">
                 <div>Hello,</div>
-                <div>User</div>
+                <div>
+                    <% if (typeof sessionId !== 'undefined') { %>
+                        <% if (!sessionId) { %>
+                            Yash Poonia
+                       <% } else { %>
+                        <%= usr.name %>
+                      <% } %>
+                   <% } else { %>
+                     Yash Poonia
+                     <% } %>
+                </div>
             </div>
             <div class="heading">
                 <div>Below you will be able to see your progress</div>
@@ -77,7 +98,7 @@
                         </div>
                         <div class="total">
                             <div class="first"><p>Total Projets:</p></div>
-                            <div class="second"><p>4</p></div>
+                            <div class="second"><p></p></div>
                         </div>
                         <div class="likes">
                             <div class="first"><p>Total likes:</p></div>
@@ -110,16 +131,9 @@
                     <div class="small"></div>
                     <div class="move">
                         <h1 class="moving-text m-0">
-                            <span class="span-0">Your Work</span>
+                            <span class="span-0">Your Work <span class="dot"></span></span>
                             <span class="dot"></span>
-                            <span class="span-1">Your Work</span>
-                            <span class="dot"></span>
-                        </h1>
-                        <h1 class="moving-text m-1">
-                            <span class="span-0">Your Work</span>
-                            <span class="dot"></span>
-                            <span class="span-1">Your Work</span>
-                            <span class="dot"></span>
+                            <span class="span-1">Your Work <span class="dot"></span></span>
                         </h1>
                     </div>
                     <div class="small"></div>

@@ -28,7 +28,7 @@ nav {
     width: 100%;
     justify-content: center;
     /* position: relative; */
-    z-index: -22;
+    /* z-index: -22; */
 }
 
 .nav-content {
@@ -287,6 +287,27 @@ main {
     aspect-ratio: 1;
     background-image: url(images/nathan-anderson-fcZIyU-nbFE-unsplash.jpg);
     background-size: cover;
+}
+
+.bg-black {
+    background-color: rgba(33,33,33);
+    color: white;
+    font-family: text-fonts;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.2rem;
+}
+
+.info-top {
+    background-color: rgba(33,33,33);
+    color: white;
+}
+
+a {
+    cursor: pointer;
 }
 
 

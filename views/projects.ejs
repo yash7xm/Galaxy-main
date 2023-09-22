@@ -12,9 +12,19 @@
         <div class="nav-content">
             <div class="logo">Galaxy</div>
             <div class="features">
-                <a href="/">Explore</a>
-                <a href="/">Create</a>
-                <a href="/">Dashboard</a>
+                <a href="/explore">Explore</a>
+                <a href="/projects">Projects</a>
+                <a href="/create">Code Play</a>
+                <a href="/upload">Upload</a>
+                <% if (typeof sessionId !=='undefined' ) { %>
+                    <% if (!sessionId) { %>
+                        <a href="/signIn">Register</a>
+                        <% } else { %>
+                            <a href="/">Profile</a>
+                            <% } %>
+                                <% } else { %>
+                                    <a href="/signIn">Register</a>
+                                    <% } %>  
             </div>
         </div>
     </nav>
@@ -23,7 +33,15 @@
         <div class="header-content">
             <div class="greet">
                 <div>Welcome</div>
-                <div><a href="/"><i>Sign Up</i></a> Now!</div>
+                <div>                    <% if (typeof sessionId !== 'undefined') { %>
+                    <% if (!sessionId) { %>
+                        Yash Poonia
+                   <% } else { %>
+                    <%= usr.name %>
+                  <% } %>
+               <% } else { %>
+                 Yash Poonia
+                 <% } %></div>
             </div>
             <div class="headings">
                 <div class="heading">
@@ -40,34 +58,7 @@
     </header>
 
     <main>
-        <!-- <div class="main-row row-0">
-            <div class="first-row-0">
-                <div class="small-row-0">
-                    <div class="small-0"></div>
-                    <div class="big-0"></div>
-                    <div class="small-1"></div>
-                    <div class="big-1"></div>
-                    <div class="small-2"></div>
-                    <div class="big-2"></div>
-                    <div class="small-3"></div>
-                    <div class="big-3"></div>
-                    <div class="small-4"></div>
-                </div>
-            </div>
-            <div class="second-row-0">
-                <div class="large-row-0">
-                    <div class="small-0"></div>
-                    <div class="big-0"></div>
-                    <div class="small-1"></div>
-                    <div class="big-1"></div>
-                    <div class="small-2"></div>
-                    <div class="big-2"></div>
-                    <div class="small-3"></div>
-                    <div class="big-3"></div>
-                    <div class="small-4"></div>
-                </div>
-            </div>
-        </div> -->
+
     </main>
 
     <footer>

@@ -22,9 +22,20 @@
         <div class="nav-content">
             <div class="logo">Galaxy</div>
             <div class="features">
-                <a href="/">Explore</a>
-                <a href="/">Create</a>
-                <a href="/">Dashboard</a>
+                <a href="/explore">Explore</a>
+                <a href="/projects">Projects</a>
+                <a href="/create">Code Play</a>
+                <a href="/typing">Typing Test</a>
+                <a href="/upload">Upload</a>
+                <% if (typeof sessionId !=='undefined' ) { %>
+                    <% if (!sessionId) { %>
+                        <a href="/signIn">Register</a>
+                        <% } else { %>
+                            <a href="/">Profile</a>
+                            <% } %>
+                                <% } else { %>
+                                    <a href="/signIn">Register</a>
+                                    <% } %>  
             </div>
         </div>
     </nav>
@@ -33,7 +44,17 @@
         <div class="header-content">
             <div class="greet">
                 <div>Hello,</div>
-                <div>Yash Poonia</div>
+                <div>
+                    <% if (typeof sessionId !== 'undefined') { %>
+                        <% if (!sessionId) { %>
+                            Yash Poonia
+                       <% } else { %>
+                        <%= usr.name %>
+                      <% } %>
+                   <% } else { %>
+                     Yash Poonia
+                     <% } %>
+                </div>
             </div>
             <div class="heading">
                 <div>Sharpen your keystrokes<br>

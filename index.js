@@ -52,9 +52,22 @@ const UserPersonalProjects = mongoose.model('UserPersonalProjects', PersonalProj
 const UserTypingResult = mongoose.model('UserTypingResult', typingResults);
 
 let sessionId;
+let usr = '';
+
+app.get('/logOut', (req,res) => {
+    res.clearCookie('userId');
+    sessionId = '';
+    res.sendStatus(200);
+})
 
 app.use(async (req, res, next) => {
     sessionId = req.cookies.userId;
+    if(sessionId) {
+        if(usr === '')
+        usr = await User.findOne({ _id : sessionId});
+        
+    }
+    console.log(usr);
     next();
   })
 
@@ -75,7 +88,10 @@ app.get('/delete', async(req, res) => {
 
 app.get('/:projectName/questions/:questionNumber', async(req,res) => {
     sessionId = req.cookies.userId;
-    const user = await User.findById(sessionId);
+    let user= '';
+    if(usr === '')
+    user = await User.findById(sessionId);
+    else user = usr;
     let questionId = user.userQuestionsData;
     const quesNumber = req.params.questionNumber; 
     const projectName = "Calculator";
@@ -84,10 +100,10 @@ app.get('/:projectName/questions/:questionNumber', async(req,res) => {
 
     let data = await Projects.findOne(
         { 'project.name': projectName },
-        { 'project.questions': { $slice: [quesNumber - 1, 1] } }
+        { 'project.questions': { $slice: [quesNumber -1, 1] } }
     );
     data = data.project[0].questions;
-    res.render('ques', {data, questionsData});
+    res.render('ques', {data, questionsData, sessionId});
 })
 
 app.post('/p', async (req, res) => {
@@ -356,10 +372,13 @@ app.get('/delUser', async(req, res) => {
 
 app.get('/find', async(req, res) => {
     const user = await User.findOne({ _id: sessionId });
+    // const user = await User.find({});
     const typing = await UserTypingResult.find({});
     const questionsData = await UserQuestionsData.findById("650a9c8cae1217953786746b");
     // res.send(questionsData);
-    res.send(user);
+    // res.send(user);
+    const personaldatas = await UserPersonalProjects.find({});
+    res.send(personaldatas)
 })
 
 app.post('/:projectName/questions/:questionNumber/submitData', async (req, res) => {
@@ -400,12 +419,15 @@ app.post('/:projectName/questions/:questionNumber/submitData', async (req, res) 
 })
 
 app.get('/run', (req, res) => {
-    const filePath = path.join(__dirname, 'run.html');
-    res.sendFile(filePath);
+    // const filePath = path.join(__dirname, '/views/run.ejs');
+    // res.sendFile(filePath);
+    res.render('run');
 });
 
 app.get('/codePlay', async(req, res) => {
-    res.render('codePlay');
+    let title = req.query.title;
+    title = title.replace(/\s+/g, " ").trim();
+    res.render('codePlay', { title });
 })
 
 app.get('/Calculator/Questions', (req, res) => {
@@ -420,12 +442,12 @@ app.get('/preview', async(req, res)=> {
     res.render('codePlay-render');
 })
 
-app.get('/login', (req,res) => {
+app.get('/signIn', (req,res) => {
     res.render('login');
 })
 
 app.get('/typing', (req, res) => {
-    res.render('typing-test');
+    res.render('typing-test', {sessionId, usr});
 })
 
 app.post('/updateScore', async (req, res) => {
@@ -435,7 +457,7 @@ app.post('/updateScore', async (req, res) => {
     }
     const user = await User.findOne({ _id: sessionId });
     console.log(user);
-    if(!user.typingResults) {
+    if(user.typingResults === undefined) {
         const typingResult = new UserTypingResult({
         });
     
@@ -480,15 +502,82 @@ app.post('/updateScore', async (req, res) => {
   })
   
   app.get('/explore', (req, res) => {
-    res.render('explore');
+    res.render('explore', { sessionId, usr });
   })
 
-  app.get('/create', (req, res) => {
-    res.render('create');
-  })
+  app.post('/handleSave-codeplay', async(req, res) => {
+    let projectTitle = req.body.title;
+    const htmlCode = req.body.html;
+    const cssCode = req.body.css;
+    const jsCode = req.body.js;
+
+    projectTitle = projectTitle.replace(/\s+/g, " ").trim();
+
+
+    const UserData = await User.findById(sessionId);
+    let PersonalProjectsId;
+
+    if(UserData.PersonalProjectData === undefined) {
+        const personalProjects = new UserPersonalProjects({
+            creations: [
+                {
+                    title: projectTitle,
+                    code: {
+                        html: htmlCode,
+                        css: cssCode,
+                        js: jsCode
+                    }
+                }
+            ]
+        })
+
+        personalProjects.save();
+
+        PersonalProjectsId = personalProjects._id;
+        UserData.PersonalProjectData = personalProjects._id;
+        UserData.save();
+    }
+    else {
+        PersonalProjectsId = UserData.PersonalProjectData;
+        const personalProjects = await UserPersonalProjects.findById(PersonalProjectsId);
+
+        const newCreation = {
+            title: projectTitle,
+            code: {
+                html: '',
+                css: '',
+                js: ''
+            }
+        }
+
+        newCreation.code.html = htmlCode;
+        newCreation.code.css = cssCode;
+        newCreation.code.js = jsCode;
+
+        personalProjects.creations.push(newCreation);
+        personalProjects.save();
+    }
+    res.sendStatus(200);
+})
+
+
+  app.get('/create', async(req, res) => {
+    
+
+    // console.log(personalData.creations.length)
+    res.render('create', { sessionId, usr});
+})
+
+app.post('/checkTitle', async(req, res) => {
+    const projectTitle = req.body.title;
+    const checkTitle = await UserPersonalProjects.findOne({ title: projectTitle})
+    
+    if(checkTitle) res.sendStatus(200);
+    else res.sendStatus(404);
+})
 
   app.get('/upload', (req, res) => {
-    res.render('upload');
+    res.render('upload', { sessionId, usr });
   })
 
   app.get('/projects', (req, res) => {

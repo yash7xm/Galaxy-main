@@ -7,58 +7,59 @@ const data = {
     [
         {
             img: '/utility/images/img0.jpg',
-            name: 'P-1',
+            name: 'Calculator',
             info: 'hehe',
         },
         {
             img: '/utility/images/img1.jpg',
-            name: 'P-2',
+            name: 'Quiz App',
             info: 'hehe',
         },
         {
             img: '/utility/images/img2.jpg',
-            name: 'P-3',
+            name: 'Landing Page',
             info: 'hehe',
         },
         {
             img: '/utility/images/img3.jpg',
-            name: 'P-4',
+            name: 'Wheather App',
             info: 'hehe',
         },
         {
             img: '/utility/images/img4.jpg',
-            name: 'P-5',
+            name: 'Tic Tac Toe',
             info: 'hehe',
         },
         {
             img: '/utility/images/img0.jpg',
-            name: 'P-6',
+            name: 'Snake Game',
             info: 'hehe',
         },
         {
             img: '/utility/images/img1.jpg',
-            name: 'P-7',
+            name: 'Speed Run',
             info: 'hehe',
         },
         {
             img: '/utility/images/img2.jpg',
-            name: 'P-8',
+            name: 'Simon Game',
             info: 'hehe',
         },
         {
             img: '/utility/images/img3.jpg',
-            name: 'P-9',
+            name: 'Guess Game',
             info: 'hehe',
         },
         {
             img: '/utility/images/img4.jpg',
-            name: 'P-10',
+            name: 'Dance',
             info: 'hehe',
         }
     ]
 }
 
-const colms = [2,0,3,1,2,0,3,1,2,0]
+const colms = [2,0,3,1,2,0,3,1,2,0];
+let seeQueBtn;
 
 createProjectRows();
 
@@ -137,7 +138,9 @@ function fillRowsWithProjects() {
 
         bigCol.classList.add('clickable');
         smallCol.classList.add('clickable');
+        smallCol.classList.add('bg-black');
         smallEyeCol.classList.add('clickable');
+        smallEyeCol.classList.add('bg-black');
         bigCol.style.backgroundImage = `url(${data.arr[i].img})`;
         bigCol.style.backgroundRepeat = 'no-repeat';
         bigCol.style.backgroundSize = 'cover';
@@ -281,6 +284,8 @@ function fillInfoAfterExpanding(r,c) {
 
     descInfo.textContent = 'Designed and developed a sleek portfolio website to showcase creative work. Created a user-friendly interface, integrated social media links, and ensured optimal loading speed for an engaging user experience.';
     seeQuesBtn.textContent = 'SEE QUESTIONS';
+    seeQuesBtn.setAttribute('onclick', 'handleSeeQuesBtn()');
+   
 
     descInfo.classList.add('desc-info');
     seeQuesBtn.classList.add('see-ques-btn');
@@ -410,6 +415,13 @@ function fillRowAfterClick(r,c) {
 
     const clickables = document.querySelectorAll('.clickable');
     handleEyeClick(clickables);
+}
+
+
+
+function handleSeeQuesBtn() {
+    
+        window.location.href = '/Calculator/questions/1';
 }
 
 

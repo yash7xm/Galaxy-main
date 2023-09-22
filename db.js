@@ -141,6 +141,10 @@ const PersonalProjectsData = new mongoose.Schema({
             date: {
                 type: String,
                 default: moment().format('YYYY MM DD')
+            },
+            likes: {
+                type: Number,
+                default: 0
             }
         }
     ]
