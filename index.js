@@ -81,10 +81,7 @@ app.get('/ques', async(req, res) => {
     res.render('ques', {data});
 })
 
-app.get('/delete', async(req, res) => {
-    await Projects.deleteMany({});
-    res.sendStatus(200)
-})
+
 
 app.get('/:projectName/questions/:questionNumber', async(req,res) => {
     sessionId = req.cookies.userId;
@@ -371,8 +368,8 @@ app.get('/delUser', async(req, res) => {
 
 
 app.get('/find', async(req, res) => {
-    const user = await User.findOne({ _id: sessionId });
-    // const user = await User.find({});
+    // const user = await User.findOne({ _id: sessionId });
+    const user = await User.find({});
     const typing = await UserTypingResult.find({});
     const questionsData = await UserQuestionsData.findById("650a9c8cae1217953786746b");
     // res.send(questionsData);
@@ -539,7 +536,9 @@ app.post('/updateScore', async (req, res) => {
     }
     else {
         PersonalProjectsId = UserData.PersonalProjectData;
+        console.log(PersonalProjectsId);
         const personalProjects = await UserPersonalProjects.findById(PersonalProjectsId);
+        console.log(personalProjects);
 
         const newCreation = {
             title: projectTitle,
