@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: text-fonts;
-    src: url(Akkurat-Mono.OTF);
+    src: url(/utility/fonts/Akkurat-Mono.OTF);
 }
 
 body{
@@ -80,11 +80,11 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 10%;
+    width: 12%;
     color: rgba(33,33,33);
     letter-spacing: .08em;
     text-transform: uppercase;
-    line-height: 1.2em;
+    line-height: 1.5em;
     font-size: 0.5rem;
 }
 
@@ -118,7 +118,7 @@ main {
 
 .basic-info .small-row {
     display: grid;
-    grid-template-columns: 1.5% 27% 1.5% 68.5% 1.5%;
+    grid-template-columns: 1.5% 31.34% 1.5% 31.34% 1.5% 31.34% 1.5%;
 }
 
 .small {
@@ -139,7 +139,7 @@ main {
 
 .basic-info .large-row {
     display: grid;
-    grid-template-columns: 1.5% 27% 1.5% 68.5% 1.5%;
+    grid-template-columns: 1.5% 31.34% 1.5% 31.34% 1.5% 31.34% 1.5%;
 }
 
 .basic-info .small-row {
@@ -187,7 +187,7 @@ main {
     border-bottom: none;
 }
 
-.big-110 {
+/* .big-110 {
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -200,7 +200,7 @@ main {
 .big-110 a {
     color: rgba(255,77,0);
     cursor: pointer;
-}
+} */
 
 .proposal-req {
     width: 70%;
@@ -313,7 +313,7 @@ main {
     background-color: #8E8E8E;
 }
 
-.big-000, .big-001, .big-041, .big-040 {
+.big-000, .big-001, .big-041, .big-040, .big-002 {
     display: flex;
     align-items: center;
     padding: 0rem 0.5rem;
@@ -385,4 +385,65 @@ main {
 
 footer {
     height: 20vh;
+}
+
+.big-110, .big-111, .big-112 {
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+}
+
+.big-112 {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+.search-wrapper {
+    display: flex;
+    width: 90%;
+    height: 5vh;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.search-wrapper input {
+    width: 80%;
+    height: 100%;
+    padding: 0.2rem;
+    background-color: transparent;
+    font-family: text-fonts;
+    font-size: 0.8rem;
+    border: 1px solid var(--border-color);
+}
+
+.search-btn {
+    flex-grow: 1;
+    /* background-image: url(https://uploads-ssl.webflow.com/60c0a5bb9df18e0c7bea5c2c/60c4ad092d9aaf42d2eeafcd_arrow.svg); */
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 200;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 2rem;
+    transition: all 150ms ease;
+    background-color: #111;
+    cursor: pointer;
+}
+
+.search-btn i {
+    color: white;
+    scale: 0.5;
+}
+
+.search-btn:hover {
+    background-position: 70% 50%;
 }

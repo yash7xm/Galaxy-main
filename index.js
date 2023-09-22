@@ -483,6 +483,14 @@ app.post('/updateScore', async (req, res) => {
     res.render('explore');
   })
 
+  app.get('/create', (req, res) => {
+    res.render('create');
+  })
+
+  app.get('/upload', (req, res) => {
+    res.render('upload');
+  })
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
