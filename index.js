@@ -53,6 +53,11 @@ const UserTypingResult = mongoose.model('UserTypingResult', typingResults);
 
 let sessionId;
 
+app.use(async (req, res, next) => {
+    sessionId = req.cookies.userId;
+    next();
+  })
+
 app.get('/data', async (req,res) => {
     const data = await Projects.find({});
     res.send(data);
@@ -124,7 +129,7 @@ app.post('/handleRunBtn', async (req, res) => {
     writeJs();
 
     function writeHtml () {
-        fs.writeFile('./run.html', html, (err) => {
+        fs.writeFile('./views/run.ejs', html, (err) => {
             if (err) {
             console.error(err);
             } else {
@@ -419,11 +424,6 @@ app.get('/login', (req,res) => {
     res.render('login');
 })
 
-
-app.get('/typing-test', (req, res) => {
-    res.render('typing');
-})
-
 app.get('/typing', (req, res) => {
     res.render('typing-test');
 })
@@ -489,6 +489,14 @@ app.post('/updateScore', async (req, res) => {
 
   app.get('/upload', (req, res) => {
     res.render('upload');
+  })
+
+  app.get('/projects', (req, res) => {
+    res.render('projects');
+  })
+
+  app.get('/', (req, res) => {
+    res.render('home', {sessionId});
   })
 
 app.listen(8080, () => {
