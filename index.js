@@ -360,22 +360,26 @@ app.post('/signIn', async(req, res) => {
     else res.sendStatus(404);
 })
 
-app.get('/delUser', async(req, res) => {
-    await User.deleteMany({});
-    res.clearCookie('userId'); 
-    res.sendStatus(200); 
-})
+// app.get('/delUser', async(req, res) => {
+//     await UserProjectsUpload.deleteMany({});
+//     res.clearCookie('userId'); 
+//     res.sendStatus(200); 
+// })
 
 
 app.get('/find', async(req, res) => {
     // const user = await User.findOne({ _id: sessionId });
     const user = await User.find({});
     const typing = await UserTypingResult.find({});
-    const questionsData = await UserQuestionsData.findById("650a9c8cae1217953786746b");
+    const questionsData = await UserQuestionsData.find({});
+    const typin = await UserTypingResult.find({});
+    const pro = await UserProjectsUpload.find({});
+    // res.send(pro);
     // res.send(questionsData);
+    res.send(typin);
     // res.send(user);
-    const personaldatas = await UserPersonalProjects.find({});
-    res.send(personaldatas)
+    // const personaldatas = await UserPersonalProjects.find({});
+    // res.send(personaldatas)
 })
 
 app.post('/:projectName/questions/:questionNumber/submitData', async (req, res) => {
@@ -582,6 +586,55 @@ app.post('/checkTitle', async(req, res) => {
   app.get('/projects', (req, res) => {
     res.render('projects');
   })
+
+  app.post('/saveProject', async (req, res) => {
+    const title = req.body.title;
+    const desc = req.body.desc;
+    const github = req.body.github;
+    const website = req.body.website;
+    const tech = req.body.tech;
+
+    // console.log(title, desc, github, website, tech)
+
+    sessionId = req.cookies.userId;
+    const UserData = await User.findById(sessionId);
+    let uploadsId = UserData.ProjectUploadData;
+
+    if(uploadsId === undefined) {
+        const ProjectUploads = new UserProjectsUpload({
+            uploads: [
+                {
+                    title: title,
+                    desc: desc,
+                    github: github,
+                    website: website,
+                }
+            ]
+        })
+
+        ProjectUploads.save();
+
+        uploadsId = ProjectUploads._id;
+        UserData.ProjectUploadData = uploadsId;
+        UserData.save();
+    }
+    else {
+        const uploadData = await UserProjectsUpload.findById(uploadsId);
+
+        const newUpload = {
+            title: title,
+            desc: desc,
+            github: github,
+            website: website,
+        }
+
+        // console.log(UserData)
+
+        uploadData.uploads.push(newUpload);
+        uploadData.save();
+    }
+    res.sendStatus(200);
+})
 
   app.get('/', (req, res) => {
     res.render('home', {sessionId});
